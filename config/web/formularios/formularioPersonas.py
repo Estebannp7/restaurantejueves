@@ -1,51 +1,62 @@
+
 from django import forms
 
 
-class FormularioPlatos(forms.Form):
+class FormularioPersonas(forms.Form):
     ##CREANDO ATRIBUTO PARA CARGAR EL SELECTOR
     
     OPCIONES=(
-        (1,'Mesero'),
-        (2,'Cocinero'),
-        (3,'Cajero')
+        (1,'Cocinero'),
+        (2,'Ayudante'),
+        (3,'Mesero'),
+        (4, 'Administrador')
     )
     
     
     
     ##DENTRO DE LA CLASE CADA ATRIBUTO SERA UN INPUT 
-    nombrePersonal= forms.CharField(
+    nombre= forms.CharField(
         widget=forms.TextInput(attrs={'class':'form-control mb-3'}),
         required= True,
-        max_length=5
+        max_length=50
     )
     
-    descripcionPlato= forms.CharField(
+    apellido= forms.CharField(
            widget=forms.TextInput(attrs={'class':'form-control mb-3'}),
         required= True,
-        max_length=20
+        max_length=200
         
     )
     
-    fotoPlato = forms.CharField(
+    foto = forms.CharField(
            widget=forms.TextInput(
             attrs={'class':'form-control mb-3'}),
         required= True,     
     )
     
     
-    precioPlato = forms.CharField(
-           widget=forms.NumberInput(
+    Cargo = forms.ChoiceField(
+           widget=forms.Select(
             attrs={'class':'form-control mb-3'}),
         required= True,
+        choices= OPCIONES
     )
     
     
     
     
-    tipoPlato= forms.ChoiceField(
-        widget= forms.Select(attrs={'class':'form-control mb-3'}),
+    Salario = forms.CharField(
+        widget= forms.NumberInput(attrs={'class':'form-control mb-3'}),
         required= True,
-        choices= OPCIONES
+        max_length=50
+        
+        
+    )
+    
+    Contacto = forms.CharField(
+        widget= forms.NumberInput(attrs={'class':'form-control mb-3'}),
+        required= True,
+        max_length=50
         
         
     )
