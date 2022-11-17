@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from web.formularios.formularioPersonas import FormularioPersonas
 
 ###IMPORTAR EL FORMULARIO A RENDERIZAR
 from web.formularios.formularioPlatos import FormularioPlatos
+from web.formularios.formularioEdicionPlatos import FormularioEdicionPlatos
 
 from web.models import Platos
 from web.models import Empleados
@@ -14,6 +15,46 @@ from web.models import Empleados
 
 def Home(request):
     return render(request,'index.html')
+
+def MenuPlatos(request):
+    
+    platosConsultados = Platos.objects.all()
+    
+    formulario = FormularioEdicionPlatos()
+    diccionarioEnvio={
+        'platos':platosConsultados,
+        'formulario': formulario
+    }
+    
+    return render(request,'menuPlatos.html',diccionarioEnvio)
+
+
+def EditarPlato(request,id):
+    #recibir los datos del formulario y editar mi plato
+     if request.method =='POST':
+        datosDelFormulario = FormularioEdicionPlatos(request.POST)
+        if datosDelFormulario.is_valid():
+            datosPlato = datosDelFormulario.cleaned_data
+            try:
+                    Platos.objects.filter(pk=id).update(precio=datosPlato["precioplato"])
+                    print("EXITO GUARDANDO LOS DATOS")
+                    
+                
+            except Exception as error:  
+                  
+                    print("error", error)        
+
+
+def MenuPersonas(request):
+    
+    personasConsultados = Empleados.objects.all()
+    
+    diccionarioEnvio={
+        'empleados':personasConsultados
+    }
+    
+    return render(request,'menuEmpleados.html',diccionarioEnvio)
+
 
 def VistaPlatos(request):
     formulario = FormularioPlatos()
@@ -54,18 +95,19 @@ def VistaPlatos(request):
 
 def Personal(request):
     formulario = FormularioPersonas()
-    datosParaTemplate = {
-        'formularioPersonas': formulario
+    datosParaTemplate1 = {
+        'formularioPersonas': formulario,
+        'bandera': False
     }
     
     #PREGUNTAMOS SI EXSITE ALGUNA PETICION DE TIPO POST
     if request.method =='POST':
         #deberiamos capturar los datos del formulario
-        datosDelFormulario = FormularioPersonas(request.POST)
+        datosDelFormulario1 = FormularioPersonas(request.POST)
         #verificar si los datos llegaron correctamente(VALIDACIONES OK)
-        if datosDelFormulario.is_valid():
+        if datosDelFormulario1.is_valid():
             #capturamos la data
-            datosPersona = datosDelFormulario.cleaned_data
+            datosPersona = datosDelFormulario1.cleaned_data
             #creamos un modelo de tipo ersonao
             personaNueva= Empleados(
                 nombre =datosPersona["nombre"],
@@ -79,16 +121,16 @@ def Personal(request):
             #Intentamos llevar el objeto platoNuevo a LA BD
             try:
                     personaNueva.save()
-                    datosParaTemplate["bandera"] = True
+                    datosParaTemplate1["bandera"] = True
                     print("EXITO GUARDANDO LOS DATOS")
                     
                 
             except Exception as error:  
-                    datosParaTemplate["bandera"] = False
+                    datosParaTemplate1["bandera"] = False
                     print("error", error)        
     
     
     
     
     
-    return render(request,'personal.html',datosParaTemplate)
+    return render(request,'personal.html',datosParaTemplate1)

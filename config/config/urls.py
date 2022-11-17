@@ -17,12 +17,16 @@ from django.contrib import admin
 from django.urls import path
 
 
-from web.views import Home,VistaPlatos,Personal
+
+from web.views import Home,VistaPlatos,Personal,MenuPlatos,MenuPersonas,EditarPlato
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', Home,name ="home"),
-     path('platos/', VistaPlatos, name = "platos"),
-      path('personal/', Personal, name = "personal")
+    path('platos/', VistaPlatos, name = "platos"),
+    path('personal/', Personal, name = "personal"),
+    path('menu/',MenuPlatos,name="menu"),
+    path('menupersona/',MenuPersonas, name="empleados"),
+    path('editarplato/<int:id>', EditarPlato, name="editarPlato")
 ]
