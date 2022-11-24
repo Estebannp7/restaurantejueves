@@ -42,7 +42,8 @@ def EditarPlato(request,id):
                 
             except Exception as error:  
                   
-                    print("error", error)        
+                    print("error", error)       
+            return redirect('menu') 
 
 
 def MenuPersonas(request):
@@ -110,8 +111,8 @@ def Personal(request):
             datosPersona = datosDelFormulario1.cleaned_data
             #creamos un modelo de tipo ersonao
             personaNueva= Empleados(
-                nombre =datosPersona["nombre"],
-                apellido =datosPersona["apellido"],
+                nombres =datosPersona["nombre"],
+                apellidos =datosPersona["apellido"],
                 foto=datosPersona["foto"],
                 cargo= datosPersona["cargo"],
                 salario=datosPersona["salario"],

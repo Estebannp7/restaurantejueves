@@ -29,4 +29,5 @@ urlpatterns = [
     path('menu/',MenuPlatos,name="menu"),
     path('menupersona/',MenuPersonas, name="empleados"),
     path('editarplato/<int:id>', EditarPlato, name="editarPlato")
+    
 ]

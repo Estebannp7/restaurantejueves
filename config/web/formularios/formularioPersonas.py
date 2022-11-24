@@ -35,7 +35,7 @@ class FormularioPersonas(forms.Form):
     )
     
     
-    Cargo = forms.ChoiceField(
+    cargo = forms.ChoiceField(
            widget=forms.Select(
             attrs={'class':'form-control mb-3'}),
         required= True,
@@ -45,7 +45,7 @@ class FormularioPersonas(forms.Form):
     
     
     
-    Salario = forms.CharField(
+    salario = forms.CharField(
         widget= forms.NumberInput(attrs={'class':'form-control mb-3'}),
         required= True,
         max_length=50
@@ -53,7 +53,7 @@ class FormularioPersonas(forms.Form):
         
     )
     
-    Contacto = forms.CharField(
+    contacto = forms.CharField(
         widget= forms.NumberInput(attrs={'class':'form-control mb-3'}),
         required= True,
         max_length=50
